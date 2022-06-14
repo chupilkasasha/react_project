@@ -1,0 +1,10 @@
+body{
+  padding: 10px;
+}
+.app-info{
+  padding: 20px;
+  background-color: rgb(132, 142, 145);
+  border-radius: 4px;
+  box-sizing: 15px 15px 30px rgba(0,0,0, 0.15);
+  color: white;
+}
