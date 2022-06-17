@@ -4,8 +4,8 @@ import './app.css';
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
-import EmployersList from '../employers-list/employers-list';
-import EmployersAddForm from '../employers-add-form/employers-add-form';
+import EmployeesList from '../employees-list/employees-list';
+import EmployeesAddForm from '../employees-add-form/employees-add-form';
 
 
 class App extends Component {
@@ -29,10 +29,24 @@ class App extends Component {
       // const newArr = [...before, ...after];
 
       return {
-        data: data.filter((item) => item.id !== id )
+        data: data.filter((item) => item.id !== id)
       }
     })
 
+  }
+  addItem(name, salary) {
+    let newItem = {
+      name,
+      salary,
+      increase: false,
+      id: this.maxId++
+    }
+    this.setState(({ data }) => {
+      let newArr = [...data, newItem];
+      return {
+        data: newArr
+      }
+    })
   }
   render() {
     const { data } = this.state;
@@ -43,11 +57,11 @@ class App extends Component {
           <SearchPanel />
           <AppFilter />
         </div>
-        <EmployersList
+        <EmployeesList
           data={data}
           onDelite={this.deliteItem}
         />
-        <EmployersAddForm />
+        <EmployeesAddForm onAdd={this.addItem} />
       </div>
     )
   }
