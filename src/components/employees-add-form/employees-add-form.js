@@ -8,15 +8,16 @@ class EmployeesAddForm extends Component {
       name:'',
       salary: ''
     }
+
   }
-  onValueChange = (e) => {
+onValueChange = (event) => {
     this.setState({
-        [e.target.name] : e.target.value
+        [event.target.name] : event.target.value
     })
 }
 
-onSubmit = (e) => {
-    e.preventDefault();
+onSubmit = (event) => {
+  event.preventDefault();
     this.props.onAdd(this.state.name, this.state.salary);
     this.setState({
         name: '',
@@ -31,7 +32,7 @@ onSubmit = (e) => {
         <h4>Добавьте нового сотрудника</h4>
         <form
           className="add-form d-flex"
-          onSabmit={this.onSubmit}>
+          onSubmit={this.onSubmit}>
           <input type="text"
             className="form-control new-post-label"
             placeholder="имя сотрудника?" 

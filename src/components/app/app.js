@@ -13,14 +13,15 @@ class App extends Component {
     super(props);
     this.state = {
       data: [
-        { name: 'Maks', salary: 123, increase: true, id: 1 },
-        { name: 'Duda', salary: 321, increase: false, id: 2 },
-        { name: 'Zara', salary: 1819, increase: true, id: 3 },
-      ]
+        { name: 'Maks', salary: 123, increase: false, rice: false, id: 1 },
+        { name: 'Duda', salary: 321, increase: false, rice: false, id: 2 },
+        { name: 'Zara', salary: 1819, increase: false, rice: false, id: 3 },
+      ],
+      term: ''
     }
-    this.maxId = 5;
-
+    this.maxId = 4;
   }
+
   deliteItem = (id) => {
     this.setState(({ data }) => {
       //const index = data.findIndex((elem) => elem.id === id);
@@ -34,11 +35,13 @@ class App extends Component {
     })
 
   }
-  addItem(name, salary) {
+
+  addItem = (name, salary) => {
     let newItem = {
       name,
       salary,
       increase: false,
+      rice: false,
       id: this.maxId++
     }
     this.setState(({ data }) => {
@@ -48,19 +51,73 @@ class App extends Component {
       }
     })
   }
+
+  onToggoleIncrease = (id) => {
+    // this.setState(({ data }) => {
+    //   const index = data.findIndex(elem => elem.id === id);
+    //   const old = data[index];
+    //   const newItem = { ...old, increase: !old.increase };
+    //   const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+    //   return {
+    //     data: newArr
+    //   }
+    // })
+    this.setState(({ data }) => ({
+      data: data.map(item => {
+        if (item.id === id) {
+          return { ...item, increase: !item.increase }
+        }
+        return item;
+      })
+    }))
+  }
+  onToggoleRice = (id) => {
+    this.setState(({ data }) => {
+      const index = data.findIndex(elem => elem.id === id);
+      const old = data[index];
+      const newItem = { ...old, rice: !old.rice };
+      const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+      return {
+        data: newArr
+      }
+
+    })
+  }
+
+  searchEmp = (items, term) => {
+    if (term.length === 0) {
+      return items;
+    }
+    return items.filter((item) => {
+      return item.name.indexOf(term) > -1
+    })
+  }
+  onUpdataSearch = (term) => {
+    this.setState({term});
+  }
+
   render() {
-    const { data } = this.state;
+    const { data, term } = this.state;
+
+    const employees = this.state.data.length;
+    const increased = this.state.data.filter((item) => item.increase).length;
+    const visibleData = this.searchEmp(data, term);
+
     return (
       <div className='app'>
-        <AppInfo />
+        <AppInfo employees={employees} increased={increased} />
         <div className='search-panel'>
-          <SearchPanel />
+          <SearchPanel 
+          onUpdataSearch={this.onUpdataSearch}/>
           <AppFilter />
         </div>
         <EmployeesList
-          data={data}
+          data={visibleData}
           onDelite={this.deliteItem}
-        />
+          onToggoleIncrease={this.onToggoleIncrease}
+          onToggoleRice={this.onToggoleRice} />
         <EmployeesAddForm onAdd={this.addItem} />
       </div>
     )
