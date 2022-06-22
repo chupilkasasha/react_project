@@ -52,7 +52,7 @@ class App extends Component {
     })
   }
 
-  onToggoleIncrease = (id) => {
+  onToggleIncrease = (id) => {
     // this.setState(({ data }) => {
     //   const index = data.findIndex(elem => elem.id === id);
     //   const old = data[index];
@@ -72,9 +72,9 @@ class App extends Component {
       })
     }))
   }
-  onToggoleRice = (id) => {
+  onToggleRice = (id) => {
     this.setState(({ data }) => {
-      const index = data.findIndex(elem => elem.id === id);
+      const index = data.findIndex((elem) => elem.id === id);
       const old = data[index];
       const newItem = { ...old, rice: !old.rice };
       const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
@@ -116,8 +116,8 @@ class App extends Component {
         <EmployeesList
           data={visibleData}
           onDelite={this.deliteItem}
-          onToggoleIncrease={this.onToggoleIncrease}
-          onToggoleRice={this.onToggoleRice} />
+          onToggleIncrease={this.onToggleIncrease}
+          onToggleRice={this.onToggleRice} />
         <EmployeesAddForm onAdd={this.addItem} />
       </div>
     )
