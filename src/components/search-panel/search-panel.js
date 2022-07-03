@@ -26,6 +26,7 @@ class SearchPanel extends Component {
           placeholder='найти сотрудника в базе'
           value={this.state.term}
           onChange={this.onUpdataSearch}
+          maxlength="10"
         />
       </div>
     )
